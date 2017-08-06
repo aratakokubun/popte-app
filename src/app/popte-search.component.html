@@ -1,0 +1,24 @@
+<div id="search-component" class="search-block">
+  <div *ngIf="componentTitle;then specifiedTitle else staticTitle"></div>
+  <ng-template #specifiedTitle>
+    <h4>
+      {{componentTitle}}
+    </h4>
+  </ng-template>
+  <ng-template #staticTitle>
+    <h4>
+      "Dashboard"
+    </h4>
+  </ng-template>
+  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+  <input #searchBox id="search-box" (keyup)="searchOnLabel(searchBox.value)" />
+  <div>
+    <div *ngFor="let popte of poptes | async"
+         (click)="gotoDetail(popte)" class="search-result" >
+      {{popte.name}}
+      <div>
+        <img src="{{popte.imageUrl}}"/>
+      </div>
+    </div>
+  </div>
+</div>

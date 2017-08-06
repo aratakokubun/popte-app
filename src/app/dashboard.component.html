@@ -1,0 +1,22 @@
+<div *ngIf="dashboardTitle;then specifiedTitle else staticTitle"></div>
+<ng-template #specifiedTitle>
+  <h3>
+    {{dashboardTitle}}
+  </h3>
+</ng-template>
+<ng-template #staticTitle>
+  <h3>
+    "Dashboard"
+  </h3>
+</ng-template>
+<div class="grid grid-pad">
+  <a *ngFor="let popte of poptes" [routerLink]="['/detail', popte.id]" class="col-1-4">
+    <div class="module popte">
+      <img src="{{popte.imageUrl}}"/>
+      <!--<img src="{{popte.localPath}}"/>-->
+    </div>
+  </a>
+</div>
+<div class="br-block">
+  <app-popte-search></app-popte-search>
+</div>

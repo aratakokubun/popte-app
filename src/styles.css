@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+	font-family: 'PopteFont';
+	src: url(/assets/fonts/LovelyCapsules.ttf);
+}
+
+/* Master Styles */
+h1 {
+  color: #369;
+  /*font-family: Arial, Helvetica, sans-serif;*/
+	font-family: 'PopteFont';
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  
+	font-family: 'PopteFont';
+  font-weight: lighter;
+}
+body {
+  margin: 2em;
+}
+body, input[text], button {
+  color: #888;
+  /*font-family: Cambria, Georgia;*/
+	font-family: 'PopteFont';
+}
+/* everywhere else */
+* {
+  /*font-family: 'PopteFont';*/
+  font-family: Arial, Helvetica, sans-serif;
+}

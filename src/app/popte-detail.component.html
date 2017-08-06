@@ -1,0 +1,19 @@
+<div *ngIf="popte">
+  <h2>{{popte.name}} details!</h2>
+  <div><label>id: </label>{{popte.id}}</div>
+  <div>
+    <label>name: </label>
+    <input [(ngModel)]="popte.name" placeholder="name" />
+  </div>
+  <div>
+    <img src="{{popte.imageUrl}}" />
+    <!--<img src="{{popte.localPath}}" />-->
+  </div>
+
+</div>
+
+<div>
+  Rate this popte!
+</div>
+<app-rate-parts></app-rate-parts>
+<button (click)="goBack()">Back</button>

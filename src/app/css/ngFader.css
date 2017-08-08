@@ -4,11 +4,12 @@
     http://www.jasonvoirin.com/ngfader
 ================================================*/
 .ng-fader {
-    background-color: #000;
+    background-color: #666;
     position: relative;
     padding: 0;
     margin: 0;
-    z-index: 22
+    z-index: 22;
+    width: 600px;
 }
 .ng-fader ul {
     height: 100%;

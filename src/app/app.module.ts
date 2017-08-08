@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PopteSearchComponent } from './popte-search.component';
 import { PopteDetailComponent } from './popte-detail.component';
 import { RateComponent } from './parts/rate.component';
+import { FaderComponent } from './fader/fader.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { RateComponent } from './parts/rate.component';
     DashboardComponent,
     PopteDetailComponent,
     RateComponent,
+    FaderComponent,
   ],
   imports: [
     BrowserModule,

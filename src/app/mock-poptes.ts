@@ -42,7 +42,11 @@ export const POPTES: Popte[] = [
     localPath: '../assets/images/poptes/popte8.jpg',
     imageUrl: 'http://imgcc.naver.jp/kaze/mission/USER/20160514/72/7255212/220/412x266x9f360c5ab7736510df54c882.jpg'
   },
-
+  {
+    id: 8, name: 'kusorep', label: ['ここだけ', '話', 'はなし', 'お前', 'クソリプ', 'くそりぷ', '送ってるで'],
+    localPath: '../assets/images/poptes/popte9.jpg',
+    imageUrl: '../assets/images/poptes/popte9.jpg'
+  },
   {
     id: 100, name: 'are', label: ['この時期', '重大発表', 'アレ', 'しかない'],
     localPath: '../assets/images/poptes/popte3.jpg',

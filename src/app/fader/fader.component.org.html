@@ -1,27 +1,26 @@
 <div class="ng-fader">
-  //images will render here
   <ul>
-    <li ng-repeat="image in images" ng-click="toggleStartStop()" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()"><img data-ng-src="{{image.src}}" data-ng-alt="{{image.alt}}" ng-class="show($index)" /></li>
+    <li *ngFor="let image of images;let idx = index" (click)="toggleStartStop()" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()">
+      <img src="{{image.src}}" alt="{{image.alt}}" class="{{show(idx)}}" />
+    </li>
   </ul>
-  //pagination dots will render here
   <div class="ng-fader-pagination">
     <ul>
-      <li ng-repeat="i in dots(numberOfImages) track by $index" ng-class="{current: selectedImage==$index}" ng-click="setSelected($index)"></li>
+      <li *ngFor="let index of dots()" class="{{tagCurrentDot(index)}}" (click)="setSelected(index)"></li>
     </ul>
   </div>
-  //controls are here
   <div class="ng-fader-controls">
     <ul>
-      <li ng-click="sliderBack()">
+      <li (click)="sliderBack()">
         <i class="ngfader-back"></i>
       </li>
-      <li ng-click="stopSlider()">
-        <i class="ngfader-pause" ng-class="{\active\: activePause}"></i>
+      <li (click)="stopSlider()">
+        <i class="ngfader-pause {{tagStopButton()}}"></i>
       </li>
-      <li ng-click="startSlider()">
-        <i class="ngfader-play" ng-class="{\active\: activeStart}"></i>
+      <li (click)="startSlider()">
+        <i class="ngfader-play {{tagStartButton()}}"></i>
       </li>
-      <li ng-click="sliderForward()">
+      <li (click)="sliderForward()">
         <i class="ngfader-forward"></i>
       </li>
     </ul>

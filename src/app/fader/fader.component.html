@@ -4,21 +4,21 @@
       <img src="{{image.src}}" alt="{{image.alt}}" class="{{show(idx)}}" />
     </li>
   </ul>
-  <!--<div class="ng-fader-pagination">
+  <div class="ng-fader-pagination">
     <ul>
-      <li *ngFor="let index of dots()" class="{{current: selectedImage==index}" (click)="{{setSelected(index)}}"></li>
+      <li *ngFor="let index of dots()" class="{{tagCurrentDot(index)}}" (click)="setSelected(index)"></li>
     </ul>
-  </div>-->
+  </div>
   <div class="ng-fader-controls">
     <ul>
       <li (click)="sliderBack()">
         <i class="ngfader-back"></i>
       </li>
       <li (click)="stopSlider()">
-        <i class="ngfader-pause" class="{\active\: activePause}"></i>
+        <i class="ngfader-pause {{tagStopButton()}}"></i>
       </li>
       <li (click)="startSlider()">
-        <i class="ngfader-play" class="{\active\: activeStart}"></i>
+        <i class="ngfader-play {{tagStartButton()}}"></i>
       </li>
       <li (click)="sliderForward()">
         <i class="ngfader-forward"></i>

@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Popte } from './popte';
 import { PopteService } from './popte.service';
+import { FontUtils } from './utils/fontUtils';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -13,6 +14,9 @@ import 'rxjs/add/operator/switchMap';
 
 export class PopteDetailComponent implements OnInit {
   @Input() popte: Popte;
+  private rateTitle: string;
+  private backButtonTitle: string;
+
   constructor(
     private popteService: PopteService,
     private route: ActivatedRoute,
@@ -23,6 +27,8 @@ export class PopteDetailComponent implements OnInit {
     this.route.paramMap.switchMap((params: ParamMap) =>
       this.popteService.getPopte(+params.get('id')))
       .subscribe(popte => this.popte = popte);
+    this.rateTitle = FontUtils.convertForPopte('コノポプテヲヒョウカスル');
+    this.backButtonTitle = FontUtils.convertForPopte('マエニモドル');
   }
 
   goBack(): void {

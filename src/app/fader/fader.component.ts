@@ -1,12 +1,5 @@
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-import { selector } from 'rxjs/operator/publish';
-import { Component, OnInit } from '@angular/core';
-import { PopteService } from '../popte.service';
-import { Popte } from '../popte';
-import { FontUtils } from '../utils/fontUtils';
+import { Component, OnInit, Input } from '@angular/core';
 import { FaderImage } from './fader-image';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-fader-component',
@@ -14,54 +7,53 @@ import { Location } from '@angular/common';
   styleUrls: ['../css/ngFader.css'],
 })
 export class FaderComponent implements OnInit {
-  private numberOfImages: number;
-  private selectedImage: number;
-  private activePause: boolean;
-  private activeStart: boolean;
-  private images: Array<FaderImage>;
-  private setTime: number;
-  private intervalPromise;
+  private _images: Array<FaderImage>;
+  private _selectedImage: number;
+  private _autoSlide: boolean;
+  private _intervalMillis: number;
+  private _intervalPromise;
 
-  constructor(
-    private popteService: PopteService,
-    private route: ActivatedRoute,
-    private location: Location,
-  ) { }
+  constructor( ) {
+    this._images = new Array();
+    this._selectedImage = 0;
+    this._autoSlide = false;
+    this._intervalMillis = 4000;
+    this._intervalMillis = null;
+  }
+
+  @Input()
+  set images(faderImage: Array<FaderImage>) {
+    this._images = faderImage;
+  }
+  get images(): Array<FaderImage> {
+    return this._images;
+  }
+
+  @Input()
+  set intervalMillis(intervalMillis: number) {
+    this._intervalMillis = intervalMillis;
+  }
 
   ngOnInit(): void {
-    this.popteService.getPoptes().then(poptes => this.init(poptes));
+    this.startSlider();
   }
 
-  private init(poptes: Popte[]): void {
-      this.images = poptes.map(this.popteToImage);
-      this.numberOfImages = this.images.length;
-      this.selectedImage = 0;
-      this.setTime = 4000;
-      this.startSlider();
+  public dots(): Array<number> {
+    return Array.apply(null, { length: this._images.length }).map(Number.call, Number);
   }
 
-  private popteToImage(popte: Popte): FaderImage {
-    return {
-      src: popte.imageUrl, alt: popte.name
-    };
-  }
-
-  public dots(): any {
-    return this.dotsMultiple(this.numberOfImages);
-  }
-
-  public dotsMultiple(num: number): any {
-    return new Array(num);
+  public tagCurrentDot(idx: number): string {
+    return this._selectedImage === idx ? 'current' : 'incurrent';
   }
 
   public setSelected(idx: number): void {
     this.stopSlider();
-    this.selectedImage = idx;
+    this._selectedImage = idx;
   }
 
   public sliderBack(): void {
     this.stopSlider();
-    this.selectedImage === 0 ? this.selectedImage = this.numberOfImages - 1 : this.selectedImage--;
+    this._selectedImage = (this._selectedImage - 1) % this.images.length;
   }
 
   public sliderForward(): void {
@@ -70,18 +62,22 @@ export class FaderComponent implements OnInit {
   }
 
   public autoSlider(): void {
-    console.log(this.selectedImage);
-    this.selectedImage < this.numberOfImages - 1 ? this.selectedImage++ : this.selectedImage = 0;
+    this._selectedImage = (this._selectedImage + 1) % this.images.length;
   }
 
   public stopSlider(): void {
-    stop();
-    this.activePause = true;
-    this.activeStart = false;
+    if (this._autoSlide && this._intervalPromise) {
+      clearInterval(this._intervalPromise);
+      this._autoSlide = false;
+    }
+  }
+
+  public tagStopButton(): string {
+    return !this._autoSlide ? 'active' : 'inactive';
   }
 
   public toggleStartStop(): void {
-    if (this.activeStart) {
+    if (this._autoSlide) {
       this.stopSlider();
     } else {
       this.startSlider();
@@ -89,14 +85,18 @@ export class FaderComponent implements OnInit {
   }
 
   public startSlider(): void {
-    this.selectedImage = 0;
-    setInterval(() => { this.autoSlider(); }, this.setTime);
-    this.activeStart = true;
-    this.activePause = false;
+    if (!this._autoSlide) {
+      this._intervalPromise = setInterval(() => { this.autoSlider(); }, this._intervalMillis);
+      this._autoSlide = true;
+    }
+  }
+
+  public tagStartButton(): string {
+    return this._autoSlide ? 'active' : 'inactive';
   }
 
   public show(idx): any {
-    if (this.selectedImage === idx) {
+    if (this._selectedImage === idx) {
       return 'show';
     }
   }

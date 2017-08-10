@@ -12,6 +12,7 @@ import { PopteSearchComponent } from './popte-search.component';
 import { PopteDetailComponent } from './popte-detail.component';
 import { RateComponent } from './parts/rate.component';
 import { FaderComponent } from './fader/fader.component';
+import { BackButtonComponent } from './parts/back-button.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FaderComponent } from './fader/fader.component';
     PopteDetailComponent,
     RateComponent,
     FaderComponent,
+    BackButtonComponent,
   ],
   imports: [
     BrowserModule,

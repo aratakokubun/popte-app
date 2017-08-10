@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopteService } from './popte.service';
 import { Popte } from './popte';
 import { FontUtils } from './utils/fontUtils';
+import { FaderImage } from './fader/fader-image';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,15 +12,24 @@ import { FontUtils } from './utils/fontUtils';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  public dashboardTitle: string;
-  public poptes: Popte[];
+  private _dashboardTitle: string;
+  private _popteFaderImages: Array<FaderImage>;
   constructor(
     private popteService: PopteService
-  ) { }
+  ) {
+    this._popteFaderImages = new Array<FaderImage>();
+  }
 
   ngOnInit(): void {
-    this.dashboardTitle = FontUtils.convertForPopte('ダッシュボード');
-    this.popteService.getPoptes().then(poptes =>
-      this.poptes = ArrayUtils.randomSelect(poptes, 4));
+    this._dashboardTitle = FontUtils.convertForPopte('ダッシュボード');
+    this.popteService.getPoptes().then(poptes => {
+      this._popteFaderImages = ArrayUtils.randomSelect(poptes, 8).map(this.popteToImage);
+    });
+  }
+
+  private popteToImage(popte: Popte): FaderImage {
+    return {
+      src: popte.imageUrl, alt: popte.name
+    };
   }
 }

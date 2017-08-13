@@ -4,7 +4,7 @@ import { FaderImage } from './fader-image';
 @Component({
   selector: 'app-fader-component',
   templateUrl: './fader.component.html',
-  styleUrls: ['../css/ngFader.css'],
+  styleUrls: ['../css/myNgFader.css'],
 })
 export class FaderComponent implements OnInit {
   private _images: Array<FaderImage>;
@@ -12,6 +12,7 @@ export class FaderComponent implements OnInit {
   private _autoSlide: boolean;
   private _intervalMillis: number;
   private _intervalPromise;
+  private _onImageClick: (id: number) => any;
 
   constructor( ) {
     this._images = new Array();
@@ -32,6 +33,11 @@ export class FaderComponent implements OnInit {
   @Input()
   set intervalMillis(intervalMillis: number) {
     this._intervalMillis = intervalMillis;
+  }
+
+  @Input()
+  set onImageClick(onImageClick: (id: number) => any) {
+    this._onImageClick = onImageClick;
   }
 
   ngOnInit(): void {

@@ -1,21 +1,21 @@
-<div *ngIf="popte">
-  <div><label>id: </label>{{popte.id}}</div>
+<div *ngIf="_popte">
+  <div><label>id: </label>{{_popte.id}}</div>
   <div>
-    <img src="{{popte.imageUrl}}" />
+    <img src="{{_popte.imageUrl}}" />
     <!--<img src="{{popte.localPath}}" />-->
   </div>
-</div>
 
-<div *ngIf="rateTitle;then specifiedTitle else staticTitle"></div>
-<ng-template #specifiedTitle>
-  <h3>
-    {{rateTitle}}
-  </h3>
-</ng-template>
-<ng-template #staticTitle>
-  <h3>
-    このポプテを評価する
-  </h3>
-</ng-template>
-<app-rate-parts></app-rate-parts>
-<app-back-button [buttonLabel]="backButtonTitle"></app-back-button>
+  <div *ngIf="_rateTitle;then specifiedTitle else staticTitle"></div>
+  <ng-template #specifiedTitle>
+    <h3>
+      {{_rateTitle}}
+    </h3>
+  </ng-template>
+  <ng-template #staticTitle>
+    <h3>
+      このポプテを評価する
+    </h3>
+  </ng-template>
+  <app-rate-parts [rateValue]="_popte.rate"></app-rate-parts>
+  <app-back-button [buttonLabel]="_backButtonTitle"></app-back-button>
+</div>

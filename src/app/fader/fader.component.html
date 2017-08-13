@@ -1,6 +1,7 @@
 <div class="ng-fader">
   <ul>
-    <li *ngFor="let image of images;let idx = index" (click)="toggleStartStop()" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()">
+    <!--<li *ngFor="let image of images;let idx = index" (click)="toggleStartStop()" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()">-->
+    <li *ngFor="let image of images;let idx = index" (click)="_onImageClick.call(this, image.id)" ng-swipe-right="sliderBack()" ng-swipe-left="sliderForward()">
       <img src="{{image.src}}" alt="{{image.alt}}" class="{{show(idx)}}" />
     </li>
   </ul>

@@ -4,4 +4,5 @@ export class Popte {
   imageUrl: string;
   localPath: string;
   label: string[];
+  rate: number;
 }

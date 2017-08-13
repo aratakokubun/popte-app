@@ -1,7 +1,7 @@
-<div *ngIf="dashboardTitle;then specifiedTitle else staticTitle"></div>
+<div *ngIf="_dashboardTitle;then specifiedTitle else staticTitle"></div>
 <ng-template #specifiedTitle>
   <h3>
-    {{dashboardTitle}}
+    {{_dashboardTitle}}
   </h3>
 </ng-template>
 <ng-template #staticTitle>
@@ -9,13 +9,5 @@
     "Dashboard"
   </h3>
 </ng-template>
-<!--<div class="grid grid-pad">
-  <a *ngFor="let popte of poptes" [routerLink]="['/detail', popte.id]" class="col-1-4">
-    <div class="module popte">
-      <img src="{{popte.imageUrl}}"/>
-      <img src="{{popte.localPath}}"/>
-    </div>
-  </a>
-</div>-->
-<app-fader-component [images]="_popteFaderImages" intervalMillis="1000"></app-fader-component>
+<app-fader-component [images]="_popteFaderImages" intervalMillis="2500" [onImageClick]="onImageClick.bind(this)"></app-fader-component>
 <app-popte-search></app-popte-search>

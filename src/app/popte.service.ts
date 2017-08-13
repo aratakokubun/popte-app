@@ -11,7 +11,7 @@ export class PopteService {
   private useMock = true;
 
   constructor(private http: Http) { }
-  getPopte(id: number): Promise<Popte> {
+  public getPopte(id: number): Promise<Popte> {
     if (this.useMock) {
       return this.getPoptes()
         .then(heroes => heroes.find(hero => hero.id === id));
@@ -28,7 +28,7 @@ export class PopteService {
       .catch(this.handleError);
   }
 
-  getPoptes(): Promise<Popte[]> {
+  public getPoptes(): Promise<Popte[]> {
     if (this.useMock) {
       return Promise.resolve(POPTES);
     } else {
@@ -40,6 +40,35 @@ export class PopteService {
     return this.http.get(this.poptesUrl)
       .toPromise()
       .then(response => response.json().data as Popte[])
+      .catch(this.handleError);
+  }
+
+  public create(name: string, imageUrl: string): Promise<Popte> {
+    return this.http
+      .post(this.poptesUrl, JSON.stringify({
+        name: name,
+        imageUrl: imageUrl,
+      }), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json().data as Popte)
+      .catch(this.handleError);
+  }
+
+  public update(popte: Popte): Promise<Popte> {
+    const url = `${this.poptesUrl}/${popte.id}`;
+    return this.http
+      .put(url, JSON.stringify(popte), { headers: this.headers })
+      .toPromise()
+      .then(() => popte)
+      .catch(this.handleError);
+  }
+
+  public delete(id: number): Promise<void> {
+    const url = `${this.poptesUrl}/${id}`;
+    return this.http
+      .delete(url, { headers: this.headers })
+      .toPromise()
+      .then(() => null)
       .catch(this.handleError);
   }
 

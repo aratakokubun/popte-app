@@ -1,6 +1,7 @@
 import { ArrayUtils } from './utils/arrayUtils';
 import { selector } from 'rxjs/operator/publish';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PopteService } from './popte.service';
 import { Popte } from './popte';
 import { FontUtils } from './utils/fontUtils';
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
   private _dashboardTitle: string;
   private _popteFaderImages: Array<FaderImage>;
   constructor(
-    private popteService: PopteService
+    private popteService: PopteService,
+    private router: Router,
   ) {
     this._popteFaderImages = new Array<FaderImage>();
   }
@@ -29,7 +31,14 @@ export class DashboardComponent implements OnInit {
 
   private popteToImage(popte: Popte): FaderImage {
     return {
-      src: popte.imageUrl, alt: popte.name
+      src: popte.imageUrl,
+      alt: popte.name,
+      id: popte.id,
     };
+  }
+
+  public onImageClick(id: number): any {
+    const link = ['/detail', id];
+    this.router.navigate(link);
   }
 }

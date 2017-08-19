@@ -7,7 +7,7 @@
     </button>
   </ng-template>
   <ng-template #showLogout>
-    <button (click)="logout()">Logout</button>
+    <button (click)="logout()" class="logout">Logout</button>
   </ng-template>
 
   <input type="text" id="message" *ngIf="this.authService.authenticated" placeholder="What is it that you do?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />

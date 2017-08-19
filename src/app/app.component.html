@@ -1,5 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <nav>
-  <a routerLink="/dashboard">{{title}}</a>
+  <div *ngIf="authService.authenticated">
+    <a routerLink="/dashboard">{{_toDashboardTitle}}</a>
+  </div>
+  <a routerLink="/login">{{_toLoginTitle}}</a>
+  <router-outlet></router-outlet>
 </nav>
-<router-outlet></router-outlet>

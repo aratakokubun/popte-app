@@ -1,0 +1,17 @@
+<div class="row columns">
+  <div *ngIf="authService.authenticated;then showLogout else showLogin"></div>
+  <ng-template #showLogin>
+    <button (click)="anonymousLogin()" class="anonymous">Anonymous Login</button>
+    <button (click)="googleLogin()" class="social">
+      <img src="../assets/images/google/btn_google_signin_dark_normal_web.png">
+    </button>
+  </ng-template>
+  <ng-template #showLogout>
+    <button (click)="logout()">Logout</button>
+  </ng-template>
+
+  <input type="text" id="message" *ngIf="this.authService.authenticated" placeholder="What is it that you do?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />
+  <div id="details-container">
+      <p *ngFor="let item of items | async"><img src="../assets/images/favicon.ico">{{item.message}}</p>
+  </div>
+</div>

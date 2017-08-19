@@ -19,7 +19,7 @@ export class FaderComponent implements OnInit {
     this._selectedImage = 0;
     this._autoSlide = false;
     this._intervalMillis = 4000;
-    this._intervalMillis = null;
+    this._intervalPromise = null;
   }
 
   @Input()

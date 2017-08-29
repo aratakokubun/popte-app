@@ -40,6 +40,12 @@ export class LoginComponent {
     });
   }
 
+  public twitterLogin(): void {
+    this.authService.twitterLogin().then(() => {
+      this.routeToHome();
+    });
+  }
+
   public logout(): void {
     this.authService.signOut();
   }

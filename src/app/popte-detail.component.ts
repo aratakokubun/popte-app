@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, AfterViewChecked, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Popte } from './popte';
-import { PopteService } from './popte.service';
+import { PopteFireService } from './services/popte-fire.service';
 import { RateComponent } from './parts/rate.component';
 import { FontUtils } from './utils/fontUtils';
 import 'rxjs/add/operator/switchMap';
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./popte-detail.component.css']
 })
 
-export class PopteDetailComponent implements OnInit, AfterViewChecked {
+export class PopteDetailComponent implements OnInit, AfterViewChecked, AfterViewInit {
   @Input() _popte: Popte;
   @ViewChild(RateComponent) _viewChild: RateComponent;
 
@@ -21,14 +21,14 @@ export class PopteDetailComponent implements OnInit, AfterViewChecked {
   private _backButtonTitle: string;
 
   constructor(
-    private _popteService: PopteService,
+    private popteFireService: PopteFireService,
     private _route: ActivatedRoute,
     private _location: Location
   ) { }
 
   public ngOnInit(): void {
     this._route.paramMap.switchMap((params: ParamMap) =>
-      this._popteService.getPopte(+params.get('id')))
+      this.popteFireService.getPopte(+params.get('id')))
       .subscribe(popte => this._popte = popte);
     this._rateTitle = FontUtils.convertForPopte('コノポプテヲヒョウカスル');
     this._backButtonTitle = FontUtils.convertForPopte('マエニモドル');
@@ -36,9 +36,22 @@ export class PopteDetailComponent implements OnInit, AfterViewChecked {
 
   public ngAfterViewChecked(): void {
     if (this._viewChild) {
-      this._popte.rate = +this._viewChild._rateValue;
-      this._popteService.update(this._popte);
+      if (this._popte.rate !== +this._viewChild._rateValue) {
+        setTimeout(() => {
+          this._popte.rate = +this._viewChild._rateValue;
+          this.popteFireService.update(this._popte);
+        });
+      }
     }
+  }
+
+  public ngAfterViewInit(): void {
+    // if (this._viewChild) {
+    //   setTimeout(() => {
+    //     this._popte.rate = +this._viewChild._rateValue;
+    //     this.popteFireService.update(this._popte);
+    //   });
+    // }
   }
 
   goBack(): void {

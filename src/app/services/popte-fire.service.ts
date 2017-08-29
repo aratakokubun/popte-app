@@ -29,13 +29,13 @@ export class PopteFireService {
   }
   public getPopte(id: number): Promise<Popte> {
     const uid = this.authService.currentUserId;
-    const popteCommon = this.af.list('/poptes/commons', {
+    const popteCommon: FirebaseListObservable<Popte[]> = this.af.list('/poptes/commons', {
       query: {
         orderByChild: 'id',
-        equalsTo: id.toString()
+        equalTo: id
       }
     });
-    const popteUser = this.af.list(`/poptes/users/${uid}`, {
+    const popteUser: FirebaseListObservable<PopteUser[]> = this.af.list(`/poptes/users/${uid}`, {
       query: {
         orderByChild: 'id',
         equalTo: id.toString()
@@ -49,25 +49,35 @@ export class PopteFireService {
   }
 
   public update(popte: Popte): Promise<Popte> {
+    const uid = this.authService.currentUserId;
+    const popteUser: FirebaseListObservable<PopteUser[]> = this.af.list(`/poptes/users/${uid}`, {
+      query: {
+        orderByChild: 'id',
+        equalTo: popte.id.toString()
+      }
+    });
+    popteUser.subscribe((data: PopteUser[]) => {
+      if (data.length > 0) {
+        const popteDatabaseKey = data[0].$key;
+        firebase.database().ref(`/poptes/users/${uid}/${popteDatabaseKey}`).set({
+          id: popte.id.toString(),
+          rate: popte.rate.toString()
+        });
+      } else {
+        this._poptesUsers.push({
+          id: popte.id.toString(),
+          rate: popte.rate.toString()
+        });
+      }
+    });
     // TODO
     return null;
-    // const url = `${this._poptesCommonsUrl}/${popte.id}`;
-    // return this.http
-    //   .put(url, JSON.stringify(popte), { _headers: this._headers })
-    //   .toPromise()
-    //   .then(() => popte)
-    //   .catch(this.handleError);
   }
 
   public delete(id: number): Promise<void> {
     // TODO
+    // use remove() method to delete specified database location.
     return null;
-    // const url = `${this._poptesCommonsUrl}/${id}`;
-    // return this.http
-    //   .delete(url, { _headers: this._headers })
-    //   .toPromise()
-    //   .then(() => null)
-    //   .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

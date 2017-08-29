@@ -13,7 +13,9 @@ export class PopteUtils {
 
   public static combineDataSingle(popteCommons: FirebaseListObservable<Popte[]>, popteUsers: FirebaseListObservable<PopteUser[]>)
   : Promise<Popte> {
-    return PopteUtils.combineAsObservable(popteCommons, popteUsers).first().toPromise()[0];
+    return PopteUtils.combineAsObservable(popteCommons, popteUsers).first()
+      .map(poptes => poptes[0])
+      .toPromise();
   }
 
   private static combineAsObservable(popteCommons: FirebaseListObservable<Popte[]>, popteUsers: FirebaseListObservable<PopteUser[]>)
@@ -27,7 +29,6 @@ export class PopteUtils {
           const popteUser = users.find(user => user.id.toString() === popteCommon.id.toString());
           if (popteUser !== undefined && popteUser !== null) {
             popteCommon.rate = popteUser.rate;
-            console.log(popteCommon.rate);
           }
         }
       );

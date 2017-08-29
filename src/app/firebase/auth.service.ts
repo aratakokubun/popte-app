@@ -71,7 +71,7 @@ export class AuthService {
     return this.socialSignIn(provider);
   }
 
-  twitterLogin(){
+  twitterLogin() {
     const provider = new firebase.auth.TwitterAuthProvider();
     return this.socialSignIn(provider);
   }

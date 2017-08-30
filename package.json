@@ -11,7 +11,19 @@
     "e2e": "ng e2e"
   },
   "private": true,
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
   "dependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "mocha": "^2.4.5",
+    "mongodb": "^2.1.16",
+    "morgan": "^1.7.0",
+    "object-assign":"4.1.0",
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
